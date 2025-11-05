@@ -50,18 +50,25 @@ class MainActivity : AppCompatActivity() {
                 val weatherResponse = Gson().fromJson(response, WeatherResponse::class.java)
                 val city = weatherResponse.name
                 val temp = weatherResponse.main?.temp
+                val desc = weatherResponse.weather?.firstOrNull()?.description
+                val main = weatherResponse.weather?.firstOrNull()?.main
                 val pressure = weatherResponse.main?.pressure
+                val pressureMmHg = pressure?.times(0.75)?.toInt()
                 val windSpeed = weatherResponse.wind?.speed
 
                 Log.i("WEATHER_APP", "Город: $city")
                 Log.i("WEATHER_APP", "Температура: $temp °C")
-                Log.i("WEATHER_APP", "Давление: $pressure hPa")
+                Log.i("WEATHER_APP", "Погода: $main")
+                Log.i("WEATHER_APP", "Описание: $desc")
+                Log.i("WEATHER_APP", "Давление: $pressureMmHg мм рт ст")
                 Log.i("WEATHER_APP", "Скорость ветра: $windSpeed м/с")
 
                 val weatherInfo = """
                 Город: $city
                 Температура: $temp °C
-                Давление: $pressure hPa
+                Погода: $main
+                Описание: $desc
+                Давление: $pressureMmHg мм рт ст
                 Скорость ветра: $windSpeed м/с
             """.trimIndent()
                 weatherTextView.text = weatherInfo
